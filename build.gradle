@@ -31,6 +31,8 @@ dependencies {
     // Logging
     implementation 'org.slf4j:slf4j-simple:2.0.10'
 
+    implementation 'com.h2database:h2:2.3.232'
+
     // Jsoup
     implementation 'org.jsoup:jsoup:1.15.3'
 

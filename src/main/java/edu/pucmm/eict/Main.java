@@ -1,6 +1,7 @@
 package edu.pucmm.eict;
 
 import edu.pucmm.eict.controladores.*;
+import edu.pucmm.eict.servicios.BootStrapServices;
 import io.javalin.Javalin;
 import io.javalin.http.staticfiles.Location;
 import io.javalin.rendering.template.JavalinThymeleaf;
@@ -104,6 +105,8 @@ public class Main {
             config.bundledPlugins.enableRouteOverview("/routes");
 
         });
+
+        BootStrapServices.getInstancia().init();
 
         app.start(getHerokuAssignedPort());
     }
