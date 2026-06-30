@@ -1,6 +1,7 @@
 package edu.pucmm.eict.controladores;
 
 import edu.pucmm.eict.encapsulaciones.Estudiante;
+import edu.pucmm.eict.servicios.EstudianteServices;
 import edu.pucmm.eict.servicios.FakeServices;
 import io.javalin.http.Context;
 import org.jetbrains.annotations.NotNull;
@@ -14,12 +15,12 @@ import java.util.Map;
  */
 public class CrudTradicionalControlador  {
 
-    private final static FakeServices fakeServices = FakeServices.getInstancia();
+    private final static EstudianteServices estudianteServices = EstudianteServices.getInstancia();
 
 
     public static void listar(@NotNull Context ctx) throws Exception {
         //tomando el parametro utl y validando el tipo.
-        List<Estudiante> lista = fakeServices.listarEstudiante();
+        List<Estudiante> lista = estudianteServices.listarEstudiante();
         //
         Map<String, Object> modelo = new HashMap<>();
         modelo.put("titulo", "Listado de Estudiante");
@@ -45,12 +46,12 @@ public class CrudTradicionalControlador  {
         //
         Estudiante tmp = new Estudiante(matricula, nombre, carrera);
         //realizar algún tipo de validación...
-        fakeServices.crearEstudiante(tmp); //puedo validar, existe un error enviar a otro vista.
+        estudianteServices.crearEstudiante(tmp); //puedo validar, existe un error enviar a otro vista.
         ctx.redirect("/crud-simple/");
     }
 
     public static void visualizarEstudiante(@NotNull Context ctx) throws Exception {
-        Estudiante estudiante = fakeServices.getEstudiantePorMatricula(ctx.pathParamAsClass("matricula", Integer.class).required().get());
+        Estudiante estudiante = estudianteServices.getEstudiantePorMatricula(ctx.pathParamAsClass("matricula", Integer.class).required().get());
         //
         Map<String, Object> modelo = new HashMap<>();
         modelo.put("titulo", "Formulario Visaulizar Estudiante "+estudiante.getMatricula());
@@ -63,7 +64,7 @@ public class CrudTradicionalControlador  {
     }
 
     public static void editarEstudianteForm(@NotNull Context ctx) throws Exception {
-        Estudiante estudiante = fakeServices.getEstudiantePorMatricula(ctx.pathParamAsClass("matricula", Integer.class).required().get());
+        Estudiante estudiante = estudianteServices.getEstudiantePorMatricula(ctx.pathParamAsClass("matricula", Integer.class).required().get());
         //
         Map<String, Object> modelo = new HashMap<>();
         modelo.put("titulo", "Formulario Editar Estudiante "+estudiante.getMatricula());
@@ -82,12 +83,12 @@ public class CrudTradicionalControlador  {
         //
         Estudiante tmp = new Estudiante(matricula, nombre, carrera);
         //realizar algún tipo de validación...
-        fakeServices.actualizarEstudiante(tmp); //puedo validar, existe un error enviar a otro vista.
+        estudianteServices.actualizarEstudiante(tmp); //puedo validar, existe un error enviar a otro vista.
         ctx.redirect("/crud-simple/");
     }
 
     public static void eliminarEstudiante(@NotNull Context ctx) throws Exception {
-        fakeServices.eliminandoEstudiante(ctx.pathParamAsClass("matricula", Integer.class).required().get());
+        estudianteServices.eliminandoEstudiante(ctx.pathParamAsClass("matricula", Integer.class).required().get());
         ctx.redirect("/crud-simple/");
     }
 
